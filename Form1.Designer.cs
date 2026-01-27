@@ -1,4 +1,4 @@
-﻿namespace Atleti
+namespace Atleti
 {
     partial class Form1
     {
@@ -11,7 +11,7 @@
         private System.Windows.Forms.Button btnAdd;
         private System.Windows.Forms.Button btnUpdate;
         private System.Windows.Forms.Button btnDelete;
-        private System.Windows.Forms.Button btnClear;
+        // private System.Windows.Forms.Button btnClear; // pulsante eliminato dall'UI
         private System.Windows.Forms.Label lblNome;
         private System.Windows.Forms.Label lblCognome;
         private System.Windows.Forms.Label lblEta;
@@ -36,7 +36,7 @@
             btnAdd = new Button();
             btnUpdate = new Button();
             btnDelete = new Button();
-            btnClear = new Button();
+            // btnClear = new Button();
             lblNome = new Label();
             lblCognome = new Label();
             lblEta = new Label();
@@ -46,11 +46,11 @@
             dateFinale = new DateTimePicker();
             numFrecceIniz = new NumericUpDown();
             numFrecceFin = new NumericUpDown();
-            lblGiornoIniz = new Label();
-            lblGiornoFin = new Label();
             btnConfermaSett = new Button();
-            giorniSett = new ComboBox();
-            gionriliberi = new Label();
+            GiorniLiberi = new CheckedListBox();
+            label1 = new Label();
+            wbChart = new WebBrowser(); // nuovo controllo per mostrare il grafico
+
             ((System.ComponentModel.ISupportInitialize)dgvAtleti).BeginInit();
             ((System.ComponentModel.ISupportInitialize)numEta).BeginInit();
             ((System.ComponentModel.ISupportInitialize)numFrecceIniz).BeginInit();
@@ -59,14 +59,14 @@
             // 
             // dgvAtleti
             // 
-            dgvAtleti.Anchor = AnchorStyles.Top | AnchorStyles.Bottom | AnchorStyles.Left | AnchorStyles.Right;
+            dgvAtleti.Anchor = AnchorStyles.Top | AnchorStyles.Left | AnchorStyles.Right;
             dgvAtleti.ColumnHeadersHeightSizeMode = DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-            dgvAtleti.Location = new Point(12, 12);
+            dgvAtleti.Location = new Point(6, 4);
             dgvAtleti.MultiSelect = false;
             dgvAtleti.Name = "dgvAtleti";
             dgvAtleti.ReadOnly = true;
             dgvAtleti.SelectionMode = DataGridViewSelectionMode.FullRowSelect;
-            dgvAtleti.Size = new Size(979, 227);
+            dgvAtleti.Size = new Size(979, 207);
             dgvAtleti.TabIndex = 0;
             dgvAtleti.SelectionChanged += dgvAtleti_SelectionChanged;
             // 
@@ -92,11 +92,11 @@
             numEta.Name = "numEta";
             numEta.Size = new Size(80, 23);
             numEta.TabIndex = 3;
-            numEta.Value = new decimal(new int[] { 18, 0, 0, 0 });
+            numEta.Value = new decimal(new int[] { 5, 0, 0, 0 }); // valore iniziale impostato su 5
             // 
             // btnAdd
             // 
-            btnAdd.Location = new Point(524, 256);
+            btnAdd.Location = new Point(524, 255);
             btnAdd.Name = "btnAdd";
             btnAdd.Size = new Size(80, 27);
             btnAdd.TabIndex = 4;
@@ -116,7 +116,7 @@
             // 
             // btnDelete
             // 
-            btnDelete.Location = new Point(616, 258);
+            btnDelete.Location = new Point(610, 258);
             btnDelete.Name = "btnDelete";
             btnDelete.Size = new Size(80, 27);
             btnDelete.TabIndex = 6;
@@ -124,51 +124,14 @@
             btnDelete.UseVisualStyleBackColor = true;
             btnDelete.Click += btnDelete_Click;
             // 
-            // btnClear
-            // 
-            btnClear.Location = new Point(616, 288);
-            btnClear.Name = "btnClear";
-            btnClear.Size = new Size(80, 27);
-            btnClear.TabIndex = 7;
-            btnClear.Text = "Pulisci";
-            btnClear.UseVisualStyleBackColor = true;
-            btnClear.Click += btnClear_Click;
-            // 
-            // lblNome
-            // 
-            lblNome.AutoSize = true;
-            lblNome.Location = new Point(12, 262);
-            lblNome.Name = "lblNome";
-            lblNome.Size = new Size(43, 15);
-            lblNome.TabIndex = 8;
-            lblNome.Text = "Nome:";
-            // 
-            // lblCognome
-            // 
-            lblCognome.AutoSize = true;
-            lblCognome.Location = new Point(12, 291);
-            lblCognome.Name = "lblCognome";
-            lblCognome.Size = new Size(63, 15);
-            lblCognome.TabIndex = 9;
-            lblCognome.Text = "Cognome:";
-            // 
-            // lblEta
-            // 
-            lblEta.AutoSize = true;
-            lblEta.Location = new Point(12, 319);
-            lblEta.Name = "lblEta";
-            lblEta.Size = new Size(26, 15);
-            lblEta.TabIndex = 10;
-            lblEta.Text = "Età:";
-            // 
             // btnGiorniTOT
             // 
             btnGiorniTOT.AutoSize = true;
-            btnGiorniTOT.Location = new Point(316, 262);
+            btnGiorniTOT.Location = new Point(314, 263);
             btnGiorniTOT.Name = "btnGiorniTOT";
-            btnGiorniTOT.Size = new Size(82, 15);
+            btnGiorniTOT.Size = new Size(85, 15);
             btnGiorniTOT.TabIndex = 11;
-            btnGiorniTOT.Text = "Giorno iniziale";
+            btnGiorniTOT.Text = "Giorno iniziale:";
             // 
             // btnGiornoFine
             // 
@@ -182,21 +145,19 @@
             // dateIniziale
             // 
             dateIniziale.Format = DateTimePickerFormat.Short;
-            dateIniziale.Location = new Point(403, 259);
+            dateIniziale.Location = new Point(397, 259);
             dateIniziale.Name = "dateIniziale";
             dateIniziale.Size = new Size(120, 23);
             dateIniziale.TabIndex = 14;
-            dateIniziale.Value = new DateTime(2026, 1, 26, 0, 0, 0, 0);
             dateIniziale.ValueChanged += dateIniziale_ValueChanged;
             // 
             // dateFinale
             // 
             dateFinale.Format = DateTimePickerFormat.Short;
-            dateFinale.Location = new Point(403, 288);
+            dateFinale.Location = new Point(397, 295);
             dateFinale.Name = "dateFinale";
             dateFinale.Size = new Size(120, 23);
             dateFinale.TabIndex = 15;
-            dateFinale.Value = new DateTime(2026, 1, 26, 0, 0, 0, 0);
             dateFinale.ValueChanged += dateFinale_ValueChanged;
             // 
             // numFrecceIniz
@@ -219,56 +180,49 @@
             numFrecceFin.TabIndex = 17;
             numFrecceFin.Value = new decimal(new int[] { 2, 0, 0, 0 });
             // 
-            // lblGiornoIniz
-            // 
-            lblGiornoIniz.AutoSize = true;
-            lblGiornoIniz.Location = new Point(616, 234);
-            lblGiornoIniz.Name = "lblGiornoIniz";
-            lblGiornoIniz.Size = new Size(0, 15);
-            lblGiornoIniz.TabIndex = 18;
-            // 
-            // lblGiornoFin
-            // 
-            lblGiornoFin.AutoSize = true;
-            lblGiornoFin.Location = new Point(616, 270);
-            lblGiornoFin.Name = "lblGiornoFin";
-            lblGiornoFin.Size = new Size(0, 15);
-            lblGiornoFin.TabIndex = 19;
-            // 
             // btnConfermaSett
             // 
-            btnConfermaSett.Location = new Point(794, 353);
+            btnConfermaSett.Location = new Point(814, 259);
             btnConfermaSett.Name = "btnConfermaSett";
             btnConfermaSett.Size = new Size(80, 27);
             btnConfermaSett.TabIndex = 20;
             btnConfermaSett.Text = "Conferma";
             btnConfermaSett.UseVisualStyleBackColor = true;
+            btnConfermaSett.Click += btnConfermaSett_Click;
             // 
-            // giorniSett
+            // GiorniLiberi
             // 
-            giorniSett.FormattingEnabled = true;
-            giorniSett.Items.AddRange(new object[] { "Lunedi", "Martedi", "Mercoledi", "Giovedi", "Venerdi", "Sabato", "Domenica" });
-            giorniSett.Location = new Point(667, 353);
-            giorniSett.Name = "giorniSett";
-            giorniSett.Size = new Size(121, 23);
-            giorniSett.TabIndex = 21;
+            GiorniLiberi.FormattingEnabled = true;
+            GiorniLiberi.Items.AddRange(new object[] { "Lunedi", "Martedi", "Mercoledi", "Giovedi", "Venerdi", "Sabato", "Domenica" });
+            GiorniLiberi.Location = new Point(726, 259);
+            GiorniLiberi.Name = "GiorniLiberi";
+            GiorniLiberi.Size = new Size(79, 130);
+            GiorniLiberi.TabIndex = 24;
+            GiorniLiberi.ItemCheck += GiorniLiberi_ItemCheck;
             // 
-            // gionriliberi
+            // wbChart
             // 
-            gionriliberi.AutoSize = true;
-            gionriliberi.Location = new Point(776, 317);
-            gionriliberi.Name = "gionriliberi";
-            gionriliberi.Size = new Size(0, 15);
-            gionriliberi.TabIndex = 23;
+            wbChart.Location = new Point(6, 220);
+            wbChart.Name = "wbChart";
+            wbChart.Size = new Size(700, 160);
+            wbChart.TabIndex = 30;
+            wbChart.AllowWebBrowserDrop = false;
+            // 
+            // label1
+            // 
+            label1.AutoSize = true;
+            label1.Location = new Point(726, 241);
+            label1.Name = "label1";
+            label1.Size = new Size(71, 15);
+            label1.TabIndex = 25;
+            label1.Text = "Giorni Liberi";
             // 
             // Form1
             // 
             ClientSize = new Size(993, 392);
-            Controls.Add(gionriliberi);
-            Controls.Add(giorniSett);
+            Controls.Add(label1);
+            Controls.Add(GiorniLiberi);
             Controls.Add(btnConfermaSett);
-            Controls.Add(lblGiornoFin);
-            Controls.Add(lblGiornoIniz);
             Controls.Add(numFrecceFin);
             Controls.Add(numFrecceIniz);
             Controls.Add(dateFinale);
@@ -278,16 +232,18 @@
             Controls.Add(lblEta);
             Controls.Add(lblCognome);
             Controls.Add(lblNome);
-            Controls.Add(btnClear);
             Controls.Add(btnDelete);
             Controls.Add(btnUpdate);
             Controls.Add(btnAdd);
             Controls.Add(numEta);
             Controls.Add(txtCognome);
             Controls.Add(txtNome);
+            Controls.Add(wbChart); // aggiunge il WebBrowser per il grafico
             Controls.Add(dgvAtleti);
             Name = "Form1";
             Text = "Gestione Atleti";
+            MaximizeBox = false;
+            FormBorderStyle = FormBorderStyle.FixedSingle;
             Load += Form1_Load;
             ((System.ComponentModel.ISupportInitialize)dgvAtleti).EndInit();
             ((System.ComponentModel.ISupportInitialize)numEta).EndInit();
@@ -305,10 +261,9 @@
         private DateTimePicker dateFinale;
         private NumericUpDown numFrecceIniz;
         private NumericUpDown numFrecceFin;
-        private Label lblGiornoIniz;
-        private Label lblGiornoFin;
         private Button btnConfermaSett;
-        private ComboBox giorniSett;
-        private Label gionriliberi;
+        private CheckedListBox GiorniLiberi;
+        private Label label1;
+        private WebBrowser wbChart;
     }
 }
