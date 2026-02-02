@@ -11,10 +11,6 @@ namespace Atleti
         private System.Windows.Forms.Button btnAdd;
         private System.Windows.Forms.Button btnUpdate;
         private System.Windows.Forms.Button btnDelete;
-        // private System.Windows.Forms.Button btnClear; // pulsante eliminato dall'UI
-        private System.Windows.Forms.Label lblNome;
-        private System.Windows.Forms.Label lblCognome;
-        private System.Windows.Forms.Label lblEta;
 
         protected override void Dispose(bool disposing)
         {
@@ -36,25 +32,25 @@ namespace Atleti
             btnAdd = new Button();
             btnUpdate = new Button();
             btnDelete = new Button();
-            // btnClear = new Button();
-            lblNome = new Label();
-            lblCognome = new Label();
-            lblEta = new Label();
             btnGiorniTOT = new Label();
             btnGiornoFine = new Label();
             dateIniziale = new DateTimePicker();
             dateFinale = new DateTimePicker();
             numFrecceIniz = new NumericUpDown();
             numFrecceFin = new NumericUpDown();
-            btnConfermaSett = new Button();
             GiorniLiberi = new CheckedListBox();
             label1 = new Label();
-            wbChart = new WebBrowser(); // nuovo controllo per mostrare il grafico
-
+            wbChart = new WebBrowser();
+            label2 = new Label();
+            label3 = new Label();
+            label4 = new Label();
+            btnGT = new Button();
+            webView = new Microsoft.Web.WebView2.WinForms.WebView2();
             ((System.ComponentModel.ISupportInitialize)dgvAtleti).BeginInit();
             ((System.ComponentModel.ISupportInitialize)numEta).BeginInit();
             ((System.ComponentModel.ISupportInitialize)numFrecceIniz).BeginInit();
             ((System.ComponentModel.ISupportInitialize)numFrecceFin).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)webView).BeginInit();
             SuspendLayout();
             // 
             // dgvAtleti
@@ -66,7 +62,7 @@ namespace Atleti
             dgvAtleti.Name = "dgvAtleti";
             dgvAtleti.ReadOnly = true;
             dgvAtleti.SelectionMode = DataGridViewSelectionMode.FullRowSelect;
-            dgvAtleti.Size = new Size(979, 207);
+            dgvAtleti.Size = new Size(1118, 207);
             dgvAtleti.TabIndex = 0;
             dgvAtleti.SelectionChanged += dgvAtleti_SelectionChanged;
             // 
@@ -92,7 +88,7 @@ namespace Atleti
             numEta.Name = "numEta";
             numEta.Size = new Size(80, 23);
             numEta.TabIndex = 3;
-            numEta.Value = new decimal(new int[] { 5, 0, 0, 0 }); // valore iniziale impostato su 5
+            numEta.Value = new decimal(new int[] { 5, 0, 0, 0 });
             // 
             // btnAdd
             // 
@@ -106,7 +102,7 @@ namespace Atleti
             // 
             // btnUpdate
             // 
-            btnUpdate.Location = new Point(524, 289);
+            btnUpdate.Location = new Point(557, 285);
             btnUpdate.Name = "btnUpdate";
             btnUpdate.Size = new Size(80, 27);
             btnUpdate.TabIndex = 5;
@@ -162,7 +158,7 @@ namespace Atleti
             // 
             // numFrecceIniz
             // 
-            numFrecceIniz.Location = new Point(381, 357);
+            numFrecceIniz.Location = new Point(378, 343);
             numFrecceIniz.Maximum = new decimal(new int[] { 1000, 0, 0, 0 });
             numFrecceIniz.Minimum = new decimal(new int[] { 1, 0, 0, 0 });
             numFrecceIniz.Name = "numFrecceIniz";
@@ -172,23 +168,13 @@ namespace Atleti
             // 
             // numFrecceFin
             // 
-            numFrecceFin.Location = new Point(471, 357);
+            numFrecceFin.Location = new Point(470, 343);
             numFrecceFin.Maximum = new decimal(new int[] { 1000, 0, 0, 0 });
             numFrecceFin.Minimum = new decimal(new int[] { 2, 0, 0, 0 });
             numFrecceFin.Name = "numFrecceFin";
             numFrecceFin.Size = new Size(70, 23);
             numFrecceFin.TabIndex = 17;
             numFrecceFin.Value = new decimal(new int[] { 2, 0, 0, 0 });
-            // 
-            // btnConfermaSett
-            // 
-            btnConfermaSett.Location = new Point(814, 259);
-            btnConfermaSett.Name = "btnConfermaSett";
-            btnConfermaSett.Size = new Size(80, 27);
-            btnConfermaSett.TabIndex = 20;
-            btnConfermaSett.Text = "Conferma";
-            btnConfermaSett.UseVisualStyleBackColor = true;
-            btnConfermaSett.Click += btnConfermaSett_Click;
             // 
             // GiorniLiberi
             // 
@@ -200,14 +186,6 @@ namespace Atleti
             GiorniLiberi.TabIndex = 24;
             GiorniLiberi.ItemCheck += GiorniLiberi_ItemCheck;
             // 
-            // wbChart
-            // 
-            wbChart.Location = new Point(6, 220);
-            wbChart.Name = "wbChart";
-            wbChart.Size = new Size(700, 160);
-            wbChart.TabIndex = 30;
-            wbChart.AllowWebBrowserDrop = false;
-            // 
             // label1
             // 
             label1.AutoSize = true;
@@ -217,38 +195,96 @@ namespace Atleti
             label1.TabIndex = 25;
             label1.Text = "Giorni Liberi";
             // 
+            // wbChart
+            // 
+            wbChart.AllowWebBrowserDrop = false;
+            wbChart.Location = new Point(6, 220);
+            wbChart.Name = "wbChart";
+            wbChart.Size = new Size(700, 160);
+            wbChart.TabIndex = 30;
+            // 
+            // label2
+            // 
+            label2.AutoSize = true;
+            label2.Location = new Point(15, 265);
+            label2.Name = "label2";
+            label2.Size = new Size(40, 15);
+            label2.TabIndex = 31;
+            label2.Text = "Nome";
+            // 
+            // label3
+            // 
+            label3.AutoSize = true;
+            label3.Location = new Point(15, 289);
+            label3.Name = "label3";
+            label3.Size = new Size(60, 15);
+            label3.TabIndex = 32;
+            label3.Text = "Cognome";
+            // 
+            // label4
+            // 
+            label4.AutoSize = true;
+            label4.Location = new Point(15, 317);
+            label4.Name = "label4";
+            label4.Size = new Size(23, 15);
+            label4.TabIndex = 33;
+            label4.Text = "Età";
+            // 
+            // btnGT
+            // 
+            btnGT.Location = new Point(584, 325);
+            btnGT.Name = "btnGT";
+            btnGT.Size = new Size(96, 41);
+            btnGT.TabIndex = 34;
+            btnGT.Text = "GeneraTabella";
+            btnGT.UseVisualStyleBackColor = true;
+            btnGT.Click += btnGT_Click_1;
+            // 
+            // webView
+            // 
+            webView.AllowExternalDrop = true;
+            webView.CreationProperties = null;
+            webView.DefaultBackgroundColor = Color.White;
+            webView.Location = new Point(849, 4);
+            webView.Name = "webView";
+            webView.Size = new Size(275, 207);
+            webView.TabIndex = 35;
+            webView.ZoomFactor = 1D;
+            // 
             // Form1
             // 
-            ClientSize = new Size(993, 392);
+            ClientSize = new Size(1132, 392);
+            Controls.Add(webView);
+            Controls.Add(btnGT);
+            Controls.Add(label4);
+            Controls.Add(label3);
+            Controls.Add(label2);
             Controls.Add(label1);
             Controls.Add(GiorniLiberi);
-            Controls.Add(btnConfermaSett);
             Controls.Add(numFrecceFin);
             Controls.Add(numFrecceIniz);
             Controls.Add(dateFinale);
             Controls.Add(dateIniziale);
             Controls.Add(btnGiornoFine);
             Controls.Add(btnGiorniTOT);
-            Controls.Add(lblEta);
-            Controls.Add(lblCognome);
-            Controls.Add(lblNome);
             Controls.Add(btnDelete);
             Controls.Add(btnUpdate);
             Controls.Add(btnAdd);
             Controls.Add(numEta);
             Controls.Add(txtCognome);
             Controls.Add(txtNome);
-            Controls.Add(wbChart); // aggiunge il WebBrowser per il grafico
+            Controls.Add(wbChart);
             Controls.Add(dgvAtleti);
+            FormBorderStyle = FormBorderStyle.FixedSingle;
+            MaximizeBox = false;
             Name = "Form1";
             Text = "Gestione Atleti";
-            MaximizeBox = false;
-            FormBorderStyle = FormBorderStyle.FixedSingle;
             Load += Form1_Load;
             ((System.ComponentModel.ISupportInitialize)dgvAtleti).EndInit();
             ((System.ComponentModel.ISupportInitialize)numEta).EndInit();
             ((System.ComponentModel.ISupportInitialize)numFrecceIniz).EndInit();
             ((System.ComponentModel.ISupportInitialize)numFrecceFin).EndInit();
+            ((System.ComponentModel.ISupportInitialize)webView).EndInit();
             ResumeLayout(false);
             PerformLayout();
         }
@@ -261,9 +297,13 @@ namespace Atleti
         private DateTimePicker dateFinale;
         private NumericUpDown numFrecceIniz;
         private NumericUpDown numFrecceFin;
-        private Button btnConfermaSett;
         private CheckedListBox GiorniLiberi;
         private Label label1;
         private WebBrowser wbChart;
+        private Label label2;
+        private Label label3;
+        private Label label4;
+        private Button btnGT;
+        private Microsoft.Web.WebView2.WinForms.WebView2 webView;
     }
 }
